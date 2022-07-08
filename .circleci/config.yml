@@ -11,8 +11,7 @@ commands:
           channel: ci-cd-alerts
           template: basic_fail_1
   
-commands:
-  install_awscli:
+   install_awscli:
     description: Install aws cli
     steps:
       - run:
