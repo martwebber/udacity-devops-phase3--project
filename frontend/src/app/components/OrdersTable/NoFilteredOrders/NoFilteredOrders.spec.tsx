@@ -11,7 +11,7 @@ describe('<NoFilteredOrders>', () => {
       <NoFilteredOrders
         searchText=''
         handleResetOrders={mockHandleResetOrders}
-      />,
+      />,srcsrsrsrsrsrc/app/components/OrdersTable/NoFilteredOrders/NoFilteredOrders.spec.tsx c/app/components/OrdersTable/NoFilteredOrders/NoFilteredOrders.spec.tsx c/app/components/OrdersTable/NoFilteredOrders/NoFilteredOrders.spec.tsx c/app/components/OrdersTable/NoFilteredOrders/NoFilteredOrders.spec.tsx c/app/components/OrdersTable/NoFilteredOrders/NoFilteredOrders.spec.tsx /app/components/OrdersTable/NoFilteredOrders/NoFilteredOrders.spec.tsx 
     );
   });
 
