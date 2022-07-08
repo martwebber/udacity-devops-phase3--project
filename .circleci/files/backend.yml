@@ -23,7 +23,7 @@ Resources:
           CidrIp: 0.0.0.0/0
 
   EC2Instance:
-    Type: AWS::EC2::Instance
+    Type: AWS::EC2::Instances
     Properties:
       InstanceType: t2.micro
       SecurityGroups:
@@ -33,5 +33,5 @@ Resources:
       # Ubuntu 18 or higher works fine
       ImageId: ami-08d4ac5b634553e16 
       Tags:
-        - Key: udacity-proj3-kp
+        - Key: udacity
           Value: !Sub backend-${ID}
