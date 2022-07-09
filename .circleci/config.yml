@@ -58,10 +58,10 @@ commands:
           when: on_fail
           command: |
             aws cloudformation delete-stack \
-              -- stack-name "udapeople-backend-<< parameters.workflow_id >>"
+              -- stack-name udapeople-backend-<< parameters.workflow_id >>
             aws cloudformation delete-stack \
-              -- stack-name "udapeople-frontend-<< parameters.workflow_id >>"
-            aws s3 rm "s3://udapeople-<< parameters.workflow_id >>" \
+              -- stack-name udapeople-frontend-<< parameters.workflow_id >>
+            aws s3 rm s3://udapeople-<< parameters.workflow_id >> \
             --recursive
 
   revert-migrations:
@@ -371,7 +371,7 @@ jobs:
             FRONTEND_WEBSITE=http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website.${AWS_DEFAULT_REGION}.amazonaws.com
             if curl -s $FRONTEND_WEBSITE | grep "Welcome"
             then
-              exit 0
+              exit 4
             else
               exit 1
             fi
