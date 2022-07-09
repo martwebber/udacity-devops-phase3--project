@@ -349,16 +349,35 @@ jobs:
     docker:
       - image: python:3.7-alpine3.11
     steps:
+      # - checkout
+      # - attach_workspace:
+      #     at: ~/
+      # - run:
+      #     name: Install dependencies
+      #     command: |
+      #       apk add --update curl
+      #       pip install awscli
       - checkout
       - attach_workspace:
           at: ~/
+      - install_awscli
+      - install_nodejs
       - run:
-          name: Install dependencies
+          name: Backend smoke test.
           command: |
-            apk add --update curl
-            pip install awscli
+            BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
+              --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --output text)
+            export API_URL=http://${BACKEND_PUBLIC_IP}:3030
+            if curl -s $API_URL/api/status | grep "ok"
+            then
+              exit 0
+            else
+              exit 1
+            fi
       - run:
-          name: Smoke test for front end
+          name: Smoke test for frontend
           command: |
             URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-west-2.amazonaws.com"             
             echo ${URL} 
