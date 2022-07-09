@@ -10,6 +10,13 @@ commands:
           event: fail
           channel: ci-cd-alerts
           template: basic_fail_1
+
+  notify_on_success:
+    steps:
+      - slack/notify:
+          event: pass
+          channel: ci-cd-alerts
+          template: success_tagged_deployment_1
   
   install_awscli:
     description: Install aws cli
@@ -431,14 +438,6 @@ jobs:
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${oldworkflowid}"
             fi
       - notify_on_failure
-  notify_on_success:
-    docker:
-      - image: circleci/node:13.8.0
-    steps:
-      - slack/notify:
-          event: pass
-          channel: ci-cd-alerts
-          template: success_tagged_deployment_1
             
 
 workflows:
