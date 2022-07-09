@@ -351,31 +351,23 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: /root
+          at: ~/
       - run:
           name: Install dependencies
           command: |
             apk add --update curl
             pip install awscli
       - run:
-          name: Backend smoke test.
+          name: Smoke test for front end
           command: |
-            ls 
-            pwd
-            export backend_url=$(curl -H "token: ecdfc255-81e1-4056-9efa-2d7fa10812e1" \
-            --request GET https://api.memstash.io/values/backend_url)
-            echo $backend_url
-            # curl "$backend_url/api/status"
-      - run:
-          name: Frontend smoke test.
-          command: |
-            URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com"
+            URL="http://udapeople-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-west-2.amazonaws.com"             
+            echo ${URL} 
             if curl -s ${URL} | grep "Welcome"
             then
-              return 0
+              exit 0
             else
-              return 1
-            fi
+              exit 1
+            fi     
       - destroy-environment
       - revert-migrations   
 
