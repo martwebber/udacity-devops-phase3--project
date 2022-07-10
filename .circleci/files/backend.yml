@@ -31,7 +31,7 @@ Resources:
       InstanceType: t2.micro
       SecurityGroups:
         - Ref: InstanceSecurityGroup
-      KeyName: prometheus-kp
+      KeyName: udacity
       ImageId: ami-08d4ac5b634553e16
       Tags:
         - Key: Name
@@ -39,8 +39,8 @@ Resources:
         - Key: Project
           Value: Udapeople
 
-  InstanceEIP:
-    Type: AWS::EC2::EIP
-    Properties:
-      Domain: vpc
-      InstanceId: !Ref EC2Instance
+  # InstanceEIP:
+  #   Type: AWS::EC2::EIP
+  #   Properties:
+  #     Domain: vpc
+  #     InstanceId: !Ref EC2Instance
