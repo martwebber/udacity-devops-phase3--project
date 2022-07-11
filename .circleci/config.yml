@@ -173,7 +173,6 @@ jobs:
           command: |
             npm install
             npm audit fix --force --audit-level=critical
-            npm audit fix --force --audit-level=critical
             npm audit --audit-level=critical
       - notify_on_failure
 
@@ -472,4 +471,3 @@ workflows:
             - smoke-test
             - cloudfront-update
             - cleanup
-            
