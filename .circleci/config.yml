@@ -96,7 +96,6 @@ jobs:
           key: frontend-build
       - notify_on_failure
 
-
   build-backend:
     docker:
       - image: circleci/node:13.8.0
@@ -213,7 +212,6 @@ jobs:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
-      # Here's where you will add some code to rollback on failure      
       - destroy-environment
       - notify_on_failure
 
@@ -235,6 +233,7 @@ jobs:
             cat inventory.txt
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment
+      - revert-migrations
       - notify_on_failure
 
   run-migrations:
@@ -277,21 +276,13 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            # BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
-            #   --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            #   --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            #   --output text)
-            # echo "API_URL=http://${BACKEND_PUBLIC_IP}:3030" >> frontend/.env
-            # cat frontend/.env
 
             BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
              --query 'Reservations[*].Instances[*].PublicIpAddress' \
              --filters Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
              --output text) >> ~/project/.circleci/ansible/inventory.txt
-
             echo "API_URL=http://${BACKEND_PUBLIC_IP}:3030" >> frontend/.env
             cat frontend/.env
-
       - run:
           name: Deploy frontend objects
           command: |
