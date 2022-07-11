@@ -276,7 +276,6 @@ jobs:
       - run:
           name: Get backend url
           command: |
-
             BACKEND_PUBLIC_IP=$(aws ec2 describe-instances \
              --query 'Reservations[*].Instances[*].PublicIpAddress' \
              --filters Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
@@ -285,8 +284,8 @@ jobs:
             cat frontend/.env
       - run:
           name: Deploy frontend objects
+          working_directory: ./frontend
           command: |
-            cd frontend
             npm run build
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
       - destroy-environment
@@ -309,13 +308,13 @@ jobs:
           keys: [backend-deps]
       - run:
           name: Install dependencies
+          working_directory: ./backend
           command: |
-            cd backend
             npm install
       - run:
           name: Package Backend
+          working_directory: ./backend
           command: |
-            cd backend
             npm run build
             tar -czf artifact.tar.gz dist/* package*
             cd ..
