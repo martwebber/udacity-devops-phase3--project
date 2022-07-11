@@ -394,7 +394,6 @@ jobs:
       - revert-migrations
       - notify_on_failure
 
-
   cleanup:
     docker:
       - image: cimg/base:stable
@@ -418,6 +417,7 @@ jobs:
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${oldworkflowid}"
             fi
       - notify_on_failure
+      
   notify_on_success:
     docker:
       - image: cimg/base:stable
@@ -427,7 +427,6 @@ jobs:
           channel: ci-cd-alerts
           template: success_tagged_deployment_1
             
-
 workflows:
   default:
     jobs:
