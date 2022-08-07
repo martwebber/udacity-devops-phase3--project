@@ -234,7 +234,7 @@ jobs:
             ansible-playbook -i inventory.txt configure-server.yml
       - destroy-environment
       - revert-migrations
-      - notify_on_failure
+      - notify_on_failure 
 
   run-migrations:
     docker:
